@@ -15,7 +15,7 @@ import fr.proxybanque.model.Client;
 public class ClientDAO implements IClientDAO {
 
 	@Autowired
-	private SessionFactory sessionFactory;
+	protected SessionFactory sessionFactory;
 	
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
@@ -23,7 +23,9 @@ public class ClientDAO implements IClientDAO {
 
 	@Transactional
 	public void addClient(Client pClient) {
+		System.out.println("***********je suis ici**********");
 		Session session = sessionFactory.openSession();
+		System.out.println("***********je suis ici**********");
 		session.save(pClient);
 		
 	}

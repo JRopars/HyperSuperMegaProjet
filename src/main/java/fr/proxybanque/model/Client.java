@@ -1,16 +1,21 @@
 package fr.proxybanque.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-@Entity
+@Entity(name="client")
 @Table(name = "clients")
 public class Client {
-	
+
 	@Id
 	@Column(name = "id_client")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +26,21 @@ public class Client {
 	private String codeP;
 	private String ville;
 	private String telephone;
+
+	
+	/* ==================================== */
+    /* ========== ASSOCIATONS ============= */
+    /* ==================================== */
+    @OneToOne(mappedBy = "client",fetch=FetchType.LAZY,cascade=CascadeType.REMOVE)
+    private CompteCourant compteCourant;
+    
+    @OneToOne(mappedBy = "client",fetch=FetchType.LAZY,cascade=CascadeType.REMOVE)
+    private CompteEpargne compteEpargne;
+    
+	@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.REMOVE)
+	@JoinColumn(name = "conseiller_id", referencedColumnName = "id_conseiller")
+	private Conseiller conseiller;
+
 	
 	/**
 	 * Constructeurs
@@ -53,7 +73,7 @@ public class Client {
 	/**
 	 * GETTERS / SETTERS
 	 */
-	
+
 	public int getId_client() {
 		return id_client;
 	}
@@ -108,6 +128,32 @@ public class Client {
 
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
-	}	
+	}
+
+	public Conseiller getConseiller() {
+		return conseiller;
+	}
+
+	public void setConseiller(Conseiller conseiller) {
+		this.conseiller = conseiller;
+	}
+
+	public CompteCourant getCompteCourant() {
+		return compteCourant;
+	}
+
+	public void setCompteCourant(CompteCourant compteCourant) {
+		this.compteCourant = compteCourant;
+	}
+
+	public CompteEpargne getCompteEpargne() {
+		return compteEpargne;
+	}
+
+	public void setCompteEpargne(CompteEpargne compteEpargne) {
+		this.compteEpargne = compteEpargne;
+	}
 	
+	
+
 }

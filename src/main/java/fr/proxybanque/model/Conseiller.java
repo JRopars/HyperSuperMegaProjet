@@ -1,22 +1,41 @@
 package fr.proxybanque.model;
 
+import java.util.Collection;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-@Entity
+@Entity(name="conseiller")
 @Table(name="conseillers")
 public class Conseiller {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="conseiller_id")
+	@Column(name="id_conseiller")
 	private int id;
 	private String login;
 	private String password;
+	
+	/* ================================== */
+	/* ========== ASSOCIATIONS ========== */
+	/* ================================== */
+	
+	@OneToMany(mappedBy = "conseiller", fetch=FetchType.LAZY,cascade=CascadeType.REMOVE)
+	private Collection<Client> clients;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name = "gerant_id", referencedColumnName = "id_gerant")
+	private Gerant gerant;
+	
 	
 	public int getId() {
 		return id;
@@ -35,12 +54,23 @@ public class Conseiller {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}	
+	
+	public Collection<Client> getClients() {
+		return clients;
 	}
-	
-	
+	public void setClients(Collection<Client> clients) {
+		this.clients = clients;
+	}
 	public Conseiller() {
 	}
 	
+	public Gerant getGerant() {
+		return gerant;
+	}
+	public void setGerant(Gerant gerant) {
+		this.gerant = gerant;
+	}
 	public Conseiller(int id, String login, String password) {
 		super();
 		this.id = id;

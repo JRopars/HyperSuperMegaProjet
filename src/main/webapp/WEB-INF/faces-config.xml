@@ -20,5 +20,19 @@
 			<supported-locale>us</supported-locale>
 		</locale-config>
 	</application>
+	
+	 <navigation-rule>
+        <from-view-id>/index.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>gerant</from-outcome>
+            <to-view-id>/test1.xhtml</to-view-id>
+        </navigation-case>
+        
+        
+        <navigation-case>
+            <from-outcome>conseiller</from-outcome>
+            <to-view-id>/test2.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 
 </faces-config>

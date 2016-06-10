@@ -1,13 +1,17 @@
 package fr.proxybanque.model;
 
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-@Entity
+@Entity(name="gerant")
 @Table(name="gerants")
 public class Gerant{
 	
@@ -17,6 +21,9 @@ public class Gerant{
 	private int id;
 	private String login;
 	private String password;
+	
+	@OneToMany(mappedBy = "gerant",fetch=FetchType.LAZY)
+	private Collection<Conseiller> conseiller;
 	
 	public int getId() {
 		return id;
@@ -50,5 +57,12 @@ public class Gerant{
 	public Gerant() {
 		super();
 	}
+	public Collection<Conseiller> getConseiller() {
+		return conseiller;
+	}
+	public void setConseiller(Collection<Conseiller> conseiller) {
+		this.conseiller = conseiller;
+	}
+	
 
 }
